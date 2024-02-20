@@ -1,19 +1,32 @@
-import { Box, CircularProgress, Divider, Pagination, Stack } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  Divider,
+  Pagination,
+  Stack,
+} from "@mui/material";
 
-import usePeoples from '@/hooks/usePeoples';
+import usePeoples from "@/hooks/usePeoples";
 
-import PeoplesList from './peoples-list';
+import PeoplesList from "./peoples-list";
+import { useListNavigation } from "@/hooks/useListNavigation";
 
 const Peoples = (): JSX.Element => {
-  const { peoples, status } = usePeoples(1);
+  const { currentPage, handlePaginationChange } = useListNavigation();
+  const { peoples, status, listMetadata } = usePeoples(currentPage);
 
   return (
     <Stack alignItems="center" justifyContent="center" my={4}>
-      {status === 'success' && peoples ? (
+      {status === "success" && peoples ? (
         <Stack gap={2}>
           <PeoplesList peoples={peoples.list} />
           <Divider />
-          <Pagination count={1} />
+          <Pagination
+            count={listMetadata.pagesCount}
+            siblingCount={0}
+            page={currentPage}
+            onChange={handlePaginationChange}
+          />
         </Stack>
       ) : (
         <Box p={4}>
