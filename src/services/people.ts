@@ -1,22 +1,22 @@
-import { APIList } from '@/types/api';
-import { List } from '@/types/list';
-import { People, PeopleAPI } from '@/types/people';
+import { APIList } from "@/types/api";
+import { List } from "@/types/list";
+import { People, PeopleAPI } from "@/types/people";
 
-import { fetcher } from '@/utils/fetcher';
-
-const PEOPLE_RESOURCE = 'people';
+import { fetcher } from "@/utils/fetcher";
 
 export class PeopleService {
   private url = process.env.NEXT_PUBLIC_API_URL;
+  private resourceIdentifier = "people";
+  private itemsPerPage = 10;
 
   private getURL(page?: number): string {
     if (!this.url) {
-      throw new Error('No exist env: NEXT_PUBLIC_API_URL');
+      throw new Error("No exist env: NEXT_PUBLIC_API_URL");
     }
-    const apiURL = new URL(this.url + PEOPLE_RESOURCE);
+    const apiURL = new URL(this.url + this.resourceIdentifier);
 
     if (page) {
-      apiURL.searchParams.append('page', page.toString());
+      apiURL.searchParams.append("page", page.toString());
     }
 
     return apiURL.href;
@@ -28,18 +28,19 @@ export class PeopleService {
     try {
       const response = await fetcher<APIList<PeopleAPI>>(url);
 
-      const requiredFields: Partial<keyof People>[] = ['name'];
+      const requiredFields: Partial<keyof People>[] = ["name"];
 
-      if (!response.results) throw new Error('No data');
+      if (!response.results) throw new Error("No data");
 
       requiredFields.forEach((field) => {
-        if (!response.results.every((x) => x[field])) throw new Error(`No ${field} field`);
+        if (!response.results.every((x) => x[field]))
+          throw new Error(`No ${field} field`);
       });
 
       return {
-        page: 1,
-        perPage: 10,
-        totalPage: 1,
+        page,
+        perPage: this.itemsPerPage,
+        totalPage: Math.ceil(response.count / this.itemsPerPage),
         list: response.results.map((x) => ({ name: x.name })),
       };
     } catch (e) {
