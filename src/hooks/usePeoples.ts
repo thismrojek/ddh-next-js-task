@@ -1,16 +1,20 @@
-import { QueryStatus, useQuery } from '@tanstack/react-query';
+import { QueryStatus, useQuery } from "@tanstack/react-query";
 
-import { List } from '@/types/list';
-import { People } from '@/types/people';
+import { List } from "@/types/list";
+import { People } from "@/types/people";
 
-import { PeopleService } from '@/services/people';
+import { PeopleService } from "@/services/people";
 
 interface State {
   status: QueryStatus;
   peoples: List<People> | undefined;
+  listMetadata: {
+    currentPage: number;
+    pagesCount: number;
+  };
 }
 
-const PEOPLES_KEY = 'people';
+const PEOPLES_KEY = "people";
 
 const usePeoples = (page: number): State => {
   const peopleService = new PeopleService();
@@ -23,6 +27,10 @@ const usePeoples = (page: number): State => {
   return {
     status: status,
     peoples: data,
+    listMetadata: {
+      currentPage: page,
+      pagesCount: data?.totalPage || 1,
+    },
   };
 };
 
