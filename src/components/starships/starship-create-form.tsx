@@ -20,6 +20,8 @@ import {
   starshipSchema,
 } from "@/pages/api/starship";
 import { useCreateStarship } from "@/hooks/useCreateStarship";
+import { z } from "zod";
+import { getZodDefaultValues } from "@/utils/forms";
 
 const StarshipForm = () => {
   const {
@@ -28,6 +30,7 @@ const StarshipForm = () => {
     setValue,
   } = useForm({
     resolver: zodResolver(starshipSchema),
+    defaultValues: getZodDefaultValues(starshipSchema),
   });
 
   const { options, setSearchValue } = useSearchPeople();
