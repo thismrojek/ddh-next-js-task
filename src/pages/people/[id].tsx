@@ -1,4 +1,4 @@
-import { PersonDetails } from "@/components/person-details";
+import { PersonDetails } from "@/components/people/person-details";
 import { PeopleService } from "@/services/people";
 import { PeopleAPI } from "@/types/people";
 

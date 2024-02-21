@@ -1,6 +1,6 @@
 import { APIList } from "@/types/api";
 import { List } from "@/types/list";
-import { People, PeopleAPI } from "@/types/people";
+import { People, PeopleAPI, SearchedPerson } from "@/types/people";
 
 import { fetcher } from "@/utils/fetcher";
 import { extractIdFromUrl } from "@/utils/url";
@@ -37,7 +37,7 @@ export class PeopleService {
     try {
       const response = await fetcher<APIList<PeopleAPI>>(url);
 
-      const requiredFields: Partial<keyof People>[] = ["name"];
+      const requiredFields: Partial<keyof Omit<People, "id">>[] = ["name"];
 
       if (!response.results) throw new Error("No data");
 
@@ -61,7 +61,7 @@ export class PeopleService {
     }
   }
 
-  async getSearchResults(search: string): Promise<People[]> {
+  async getSearchResults(search: string): Promise<SearchedPerson[]> {
     const url = this.getURL({ search });
 
     try {

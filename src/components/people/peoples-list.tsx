@@ -23,7 +23,7 @@ const PeoplesList = ({ peoples }: Props): JSX.Element => {
           <Typography key={x.name} variant="subtitle1">
             {x.name}
           </Typography>
-          <Link href={ROUTES.people.details(x.id)}>Details</Link>
+          {x.id && <Link href={ROUTES.people.details(x.id)}>Details</Link>}
         </Box>
       ))}
     </>

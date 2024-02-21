@@ -5,11 +5,10 @@ import {
   Pagination,
   Stack,
 } from "@mui/material";
-
 import usePeoples from "@/hooks/usePeoples";
+import { useListNavigation } from "@/hooks/useListNavigation";
 
 import PeoplesList from "./peoples-list";
-import { useListNavigation } from "@/hooks/useListNavigation";
 
 const Peoples = (): JSX.Element => {
   const { currentPage, handlePaginationChange } = useListNavigation();

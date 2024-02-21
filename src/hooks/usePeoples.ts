@@ -2,7 +2,6 @@ import { QueryStatus, useQuery } from "@tanstack/react-query";
 
 import { List } from "@/types/list";
 import { People } from "@/types/people";
-
 import { PeopleService } from "@/services/people";
 
 interface State {

@@ -1,10 +1,6 @@
-import Layout from '@/components/layout';
-import Peoples from '@/components/peoples';
+import ROUTES from "@/utils/routes";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <Layout>
-      <Peoples />
-    </Layout>
-  );
+  redirect(ROUTES.people.root);
 }

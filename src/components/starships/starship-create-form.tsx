@@ -20,7 +20,6 @@ import {
   starshipSchema,
 } from "@/pages/api/starship";
 import { useCreateStarship } from "@/hooks/useCreateStarship";
-import { z } from "zod";
 import { getZodDefaultValues } from "@/utils/forms";
 
 const StarshipForm = () => {
