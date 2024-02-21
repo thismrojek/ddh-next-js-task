@@ -51,4 +51,16 @@ export class PeopleService {
       throw new Error(`Error while fetching ${e}`);
     }
   }
+
+  async getDetails(id: number): Promise<PeopleAPI> {
+    const url = `${this.getURL()}/${id}`;
+
+    try {
+      const response = await fetcher<PeopleAPI>(url);
+
+      return response;
+    } catch (e) {
+      throw new Error(`Error while fetching ${e}`);
+    }
+  }
 }
