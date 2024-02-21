@@ -3,6 +3,7 @@ import { List } from "@/types/list";
 import { People, PeopleAPI } from "@/types/people";
 
 import { fetcher } from "@/utils/fetcher";
+import { extractIdFromUrl } from "@/utils/url";
 
 export class PeopleService {
   private url = process.env.NEXT_PUBLIC_API_URL;
@@ -41,7 +42,10 @@ export class PeopleService {
         page,
         perPage: this.itemsPerPage,
         totalPage: Math.ceil(response.count / this.itemsPerPage),
-        list: response.results.map((x) => ({ name: x.name })),
+        list: response.results.map((x) => ({
+          name: x.name,
+          id: extractIdFromUrl(x.url),
+        })),
       };
     } catch (e) {
       throw new Error(`Error while fetching ${e}`);
