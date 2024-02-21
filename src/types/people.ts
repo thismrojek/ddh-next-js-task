@@ -25,5 +25,6 @@ export interface PeopleAPI {
 
 export interface People {
   name: string;
-  id: number;
+  id?: number;
+  url: string;
 }
